@@ -18,7 +18,6 @@
             overflow-x: hidden;
         }
 
-        /* Container Section 1 */
         .cover-section {
             position: relative;
             width: 100%;
@@ -43,49 +42,47 @@
             z-index: 1;
         }
 
-        /* Styling Bunga & Animasi Gerak */
+        /* --- PERBAIKAN UKURAN BUNGA --- */
         .bunga {
             position: absolute;
             z-index: 2;
-            width: 40%; 
-            max-width: 350px;
+            /* Menggunakan width auto agar tidak ter-crop/zoom */
+            width: auto; 
+            /* Batasi tinggi/lebar maksimal agar pas di layar HP & Desktop */
+            max-width: 250px; 
+            max-height: 250px;
             pointer-events: none;
-            /* Efek transisi halus */
-            transition: all 0.5s ease;
+            object-fit: contain; /* Memastikan gambar tidak terdistorsi */
         }
 
-        /* Animasi Mengambang (Floating) untuk bunga atas */
+        /* Responsif untuk layar HP kecil */
+        @media (max-width: 600px) {
+            .bunga {
+                max-width: 150px;
+                max-height: 150px;
+            }
+        }
+
+        /* Animasi */
         @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(2deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
+            0% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-5px, -10px) rotate(2deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
         }
 
-        /* Animasi Goyang Halus (Sway) untuk bunga bawah */
         @keyframes sway {
-            0% { transform: translateX(0px) rotate(0deg); }
-            50% { transform: translateX(10px) rotate(-2deg); }
-            100% { transform: translateX(0px) rotate(0deg); }
+            0% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(5px, 5px) rotate(-2deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
         }
 
-        .kiri-atas { 
-            top: -10px; left: -10px; 
-            animation: float 6s ease-in-out infinite; 
-        }
-        .kanan-atas { 
-            top: -10px; right: -10px; 
-            animation: float 7s ease-in-out infinite reverse; 
-        }
-        .kiri-bawah { 
-            bottom: -10px; left: -10px; 
-            animation: sway 8s ease-in-out infinite; 
-        }
-        .kanan-bawah { 
-            bottom: -10px; right: -10px; 
-            animation: sway 9s ease-in-out infinite reverse; 
-        }
+        /* Posisi Presisi di Pojok */
+        .kiri-atas { top: 0; left: 0; animation: float 5s ease-in-out infinite; }
+        .kanan-atas { top: 0; right: 0; animation: float 6s ease-in-out infinite reverse; }
+        .kiri-bawah { bottom: 0; left: 0; animation: sway 7s ease-in-out infinite; }
+        .kanan-bawah { bottom: 0; right: 0; animation: sway 8s ease-in-out infinite reverse; }
 
-        /* Elemen Tengah */
+        /* Konten Tengah */
         .content-wrap {
             position: relative;
             z-index: 3;
@@ -93,51 +90,47 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 40px;
+            gap: 30px;
         }
 
         .logo-tengah {
-            width: 220px;
+            width: 200px;
             height: auto;
-            filter: drop-shadow(0px 4px 15px rgba(0,0,0,0.2));
-            /* Inisial juga bisa dibuat detak jantung halus */
+            filter: drop-shadow(0px 4px 10px rgba(0,0,0,0.2));
             animation: pulse 4s ease-in-out infinite;
         }
 
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.03); }
-            100% { transform: scale(1); }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
         .btn-buka {
             background-color: #8D6E63;
             color: white;
             border: none;
-            padding: 14px 35px;
+            padding: 12px 30px;
             font-size: 14px;
             font-weight: bold;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
             border-radius: 50px;
             cursor: pointer;
             text-transform: uppercase;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-            transition: 0.4s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: 0.3s;
         }
 
         .btn-buka:hover {
             background-color: #6D4C41;
-            transform: scale(1.1);
+            transform: translateY(-2px);
         }
 
         .section-dua {
             height: 100vh;
-            background: #fdfaf7;
+            background: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
-            position: relative;
-            z-index: 5;
         }
     </style>
 </head>
@@ -160,19 +153,13 @@
     </div>
 
     <div id="section2" class="section-dua">
-        <h2 style="color: #8D6E63;">Konten Undangan Disini</h2>
+        <h2 style="color: #8D6E63;">Isi Undangan Mulai dari Sini</h2>
     </div>
 
     <script>
         function startInvitation() {
-            var audio = document.getElementById("lagu");
-            audio.play().catch(function(error) {
-                console.log("Browser memblokir audio otomatis");
-            });
-
-            document.getElementById("section2").scrollIntoView({ 
-                behavior: "smooth" 
-            });
+            document.getElementById("lagu").play();
+            document.getElementById("section2").scrollIntoView({ behavior: "smooth" });
         }
     </script>
 
