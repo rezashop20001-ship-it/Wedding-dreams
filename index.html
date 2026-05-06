@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Undangan Digital - Section 1</title>
     <style>
-        /* Reset Dasar */
         * {
             margin: 0;
             padding: 0;
@@ -16,6 +15,7 @@
             height: 100%;
             font-family: 'Arial', sans-serif;
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
         /* Container Section 1 */
@@ -23,7 +23,7 @@
             position: relative;
             width: 100%;
             height: 100vh;
-            overflow: hidden; /* Penting agar bunga tidak keluar layar */
+            overflow: hidden;
             background-image: url('bg_rumah_adat.jpg');
             background-size: cover;
             background-position: center;
@@ -33,30 +33,57 @@
             justify-content: center;
         }
 
-        /* Overlay Gelap Transparan */
         .overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.15); /* Menggelapkan sedikit agar elemen menonjol */
+            background: rgba(0, 0, 0, 0.1);
             z-index: 1;
         }
 
-        /* Styling Bunga (Absolute agar ikut tergulung saat scroll) */
+        /* Styling Bunga & Animasi Gerak */
         .bunga {
             position: absolute;
             z-index: 2;
-            width: 35%; /* Ukuran responsif */
-            max-width: 300px;
+            width: 40%; 
+            max-width: 350px;
             pointer-events: none;
+            /* Efek transisi halus */
+            transition: all 0.5s ease;
         }
 
-        .kiri-atas { top: 0; left: 0; }
-        .kanan-atas { top: 0; right: 0; }
-        .kiri-bawah { bottom: 0; left: 0; }
-        .kanan-bawah { bottom: 0; right: 0; }
+        /* Animasi Mengambang (Floating) untuk bunga atas */
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        /* Animasi Goyang Halus (Sway) untuk bunga bawah */
+        @keyframes sway {
+            0% { transform: translateX(0px) rotate(0deg); }
+            50% { transform: translateX(10px) rotate(-2deg); }
+            100% { transform: translateX(0px) rotate(0deg); }
+        }
+
+        .kiri-atas { 
+            top: -10px; left: -10px; 
+            animation: float 6s ease-in-out infinite; 
+        }
+        .kanan-atas { 
+            top: -10px; right: -10px; 
+            animation: float 7s ease-in-out infinite reverse; 
+        }
+        .kiri-bawah { 
+            bottom: -10px; left: -10px; 
+            animation: sway 8s ease-in-out infinite; 
+        }
+        .kanan-bawah { 
+            bottom: -10px; right: -10px; 
+            animation: sway 9s ease-in-out infinite reverse; 
+        }
 
         /* Elemen Tengah */
         .content-wrap {
@@ -70,36 +97,42 @@
         }
 
         .logo-tengah {
-            width: 180px;
+            width: 220px;
             height: auto;
-            filter: drop-shadow(0px 4px 10px rgba(0,0,0,0.3));
+            filter: drop-shadow(0px 4px 15px rgba(0,0,0,0.2));
+            /* Inisial juga bisa dibuat detak jantung halus */
+            animation: pulse 4s ease-in-out infinite;
         }
 
-        /* Tombol Buka Undangan */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+
         .btn-buka {
-            background-color: #8D6E63; /* Warna Cokelat Earthy */
+            background-color: #8D6E63;
             color: white;
             border: none;
-            padding: 12px 30px;
+            padding: 14px 35px;
             font-size: 14px;
             font-weight: bold;
-            letter-spacing: 1.5px;
+            letter-spacing: 2px;
             border-radius: 50px;
             cursor: pointer;
             text-transform: uppercase;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            transition: 0.3s;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            transition: 0.4s;
         }
 
         .btn-buka:hover {
             background-color: #6D4C41;
-            transform: translateY(-3px);
+            transform: scale(1.1);
         }
 
-        /* Simulasi Section 2 agar bisa di-scroll */
         .section-dua {
             height: 100vh;
-            background: #fff;
+            background: #fdfaf7;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -127,16 +160,16 @@
     </div>
 
     <div id="section2" class="section-dua">
-        <h1>Konten Undangan Disini</h1>
+        <h2 style="color: #8D6E63;">Konten Undangan Disini</h2>
     </div>
 
     <script>
         function startInvitation() {
-            // Putar Musik
             var audio = document.getElementById("lagu");
-            audio.play();
+            audio.play().catch(function(error) {
+                console.log("Browser memblokir audio otomatis");
+            });
 
-            // Scroll ke Section 2
             document.getElementById("section2").scrollIntoView({ 
                 behavior: "smooth" 
             });
