@@ -3,186 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Wedding of Romeo & Juliet</title>
+    <title>Undangan Pernikahan Digital</title>
     
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
-    <style>
-        :root {
-            --gold-primary: #C5A059;
-            --dark-brown: #2C2416;
-            --soft-cream: #F9F6F0;
-        }
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
 
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--soft-cream);
-            color: var(--dark-brown);
+    <style>
+        /* --- CSS STYLES --- */
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Playfair Display', serif;
             overflow-x: hidden;
         }
 
-        h1, h2, h3, .font-serif { font-family: 'Playfair Display', serif; }
-
-        /* Floating Decoration */
-        .flower-corner {
-            position: fixed;
-            width: 120px;
-            z-index: 999;
-            pointer-events: none;
+        /* Container Utama (Section 1) */
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            /* Ganti link di bawah dengan foto rumah adat pilihanmu */
+            background: url('https://images.unsplash.com/photo-1590059536259-7f7f85823793?q=80&w=1000') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
         }
-        .top-left { top: 0; left: 0; }
-        .top-right { top: 0; right: 0; }
-        .bottom-left { bottom: 0; left: 0; }
-        .bottom-right { bottom: 0; right: 0; }
 
-        /* Fix Cover: Pastikan Full Center */
-        #cover {
-            position: fixed;
+        /* Overlay Gelap Tipis agar teks terbaca */
+        .overlay {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100vh;
-            z-index: 1000;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('file1.jpg');
-            background-size: cover;
-            background-position: center;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.35);
+            z-index: 1;
+        }
+
+        /* Dekorasi Bunga Melayang */
+        .decor {
+            position: absolute;
+            width: 130px; /* Ukuran pas untuk layar HP */
+            height: auto;
+            z-index: 2;
+            pointer-events: none; /* Supaya tidak menghalangi sentuhan jari pada tombol */
+            opacity: 0.9;
+        }
+
+        .top-left { top: -5px; left: -5px; }
+        .top-right { top: -5px; right: -5px; transform: scaleX(-1); }
+        .bottom-left { bottom: -5px; left: -5px; transform: scaleY(-1); }
+        .bottom-right { bottom: -5px; right: -5px; transform: rotate(180deg); }
+
+        /* Pembungkus Konten Utama */
+        .content-wrapper {
+            position: relative;
+            z-index: 3;
+            height: 80vh;
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            transition: all 1s cubic-bezier(0.645, 0.045, 0.355, 1);
-            text-align: center;
+            padding: 40px 0;
         }
 
-        .cover-hidden {
-            transform: translateY(-100%);
-            opacity: 0;
-            visibility: hidden;
+        /* Inisial Nama (Atas) */
+        .logo-initial {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.8rem;
+            color: #f3e5ab; /* Warna emas muda/krem */
+            border: 1.5px solid #D2B48C;
+            padding: 10px 25px;
+            border-radius: 50% 10% 50% 10%;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(2px);
         }
 
-        /* Hero Section Fix */
-        .main-content {
-            padding-top: 50px;
+        /* Animasi Fade In */
+        .fade-in {
+            animation: fadeInAnim 2s ease-out forwards;
         }
 
-        .oval-frame {
-            width: 180px;
-            height: 260px;
-            border-radius: 100px;
-            object-fit: cover;
-            border: 3px solid var(--gold-primary);
-            padding: 5px;
+        /* Nama Pasangan (Tengah) */
+        .text-group .subtitle {
+            font-size: 0.75rem;
+            letter-spacing: 5px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
         }
 
-        .arch-container {
-            border-top-left-radius: 150px;
-            border-top-right-radius: 150px;
-            background: white;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        .text-group .couple-name {
+            font-size: 2.6rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            line-height: 1.2;
         }
 
-        .gold-btn {
-            background-color: var(--gold-primary);
-            color: white;
-            padding: 14px 36px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.85rem;
+        .text-group .date {
+            font-size: 0.9rem;
+            font-style: italic;
             letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4);
         }
 
-        #music-control {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            z-index: 1100;
-            background: var(--gold-primary);
-            padding: 12px;
-            border-radius: 50%;
-            color: white;
-            display: none; /* Muncul setelah klik buka */
+        /* Tombol Buka (Bawah) */
+        .btn-open {
+            display: inline-block;
+            padding: 14px 35px;
+            background-color: #D2B48C; /* Warna Cokelat Muda */
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-open:active {
+            transform: scale(0.95);
+            background-color: #b5956d;
+        }
+
+        /* Keyframes Animasi */
+        @keyframes fadeInAnim {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Penyesuaian untuk layar Tablet/Desktop */
+        @media (min-width: 768px) {
+            .decor { width: 200px; }
+            .text-group .couple-name { font-size: 4.5rem; }
+            .logo-initial { font-size: 4rem; }
         }
     </style>
 </head>
-<body class="overflow-hidden">
+<body>
 
-    <img src="file2.png" class="flower-corner top-left">
-    <img src="file3.png" class="flower-corner top-right">
-    <img src="file4.png" class="flower-corner bottom-left">
-    <img src="file5.png" class="flower-corner bottom-right">
+    <section class="hero-section">
+        <div class="overlay"></div>
 
-    <div id="music-control" onclick="toggleMusic()">
-        <svg id="music-icon" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M6 13c0 1.105-1.12 2-2.5 2S1 14.105 1 13c0-1.104 1.12-2 2.5-2s2.5.896 2.5 2zm9-2c0 1.105-1.12 2-2.5 2s-2.5-.895-2.5-2c0-1.104 1.12-2 2.5-2s2.5.896 2.5 2z"/>
-            <path fill-rule="evenodd" d="M14 11V2h1v9h-1zM6 3v10H5V3h1z"/>
-            <path d="M5 2.905a1 1 0 0 1 .9-.995l8-.8a1 1 0 0 1 1.1.995V3L5 4V2.905z"/>
-        </svg>
-    </div>
-    <audio id="bgMusic" loop><source src="musik.mp3" type="audio/mpeg"></audio>
+        <img src="https://cdn-icons-png.flaticon.com/512/3505/3505053.png" alt="Flower Decor" class="decor top-left">
+        <img src="https://cdn-icons-png.flaticon.com/512/3505/3505053.png" alt="Flower Decor" class="decor top-right">
+        <img src="https://cdn-icons-png.flaticon.com/512/3505/3505053.png" alt="Flower Decor" class="decor bottom-left">
+        <img src="https://cdn-icons-png.flaticon.com/512/3505/3505053.png" alt="Flower Decor" class="decor bottom-right">
 
-    <section id="cover">
-        <div class="px-6" data-aos="fade-up">
-            <img src="file6.png" class="w-20 mx-auto mb-8" alt="Logo">
-            <p class="uppercase tracking-[0.3em] text-xs text-gray-200 mb-4">The Wedding Of</p>
-            <h1 class="text-5xl md:text-7xl text-white mb-2 italic">Romeo & Juliet</h1>
-            <p class="text-white font-light tracking-widest text-sm mb-12">15 . 09 . 2024</p>
-            <button onclick="openInvitation()" class="gold-btn">BUKA UNDANGAN</button>
+        <div class="content-wrapper">
+            <div class="logo-initial fade-in">
+                R & A
+            </div>
+
+            <div class="text-group fade-in" style="animation-delay: 0.5s;">
+                <p class="subtitle">The Wedding of</p>
+                <h1 class="couple-name">Romeo &<br>Alana</h1>
+                <p class="date">17 . 08 . 2026</p>
+            </div>
+
+            <div class="fade-in" style="animation-delay: 1s;">
+                <a href="#" class="btn-open">BUKA UNDANGAN</a>
+            </div>
         </div>
     </section>
 
-    <div class="main-content">
-        <section class="py-16 px-6 text-center">
-            <div class="max-w-xl mx-auto" data-aos="fade-up">
-                <img src="file7.jpg" class="w-full aspect-[4/5] object-cover rounded-t-full shadow-xl mb-12 border-8 border-white" alt="Main Photo">
-                <h2 class="text-3xl mb-6">Maha Suci Allah</h2>
-                <p class="italic font-light leading-loose text-gray-600 px-4">
-                    "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya."
-                </p>
-                <p class="mt-4 font-bold text-sm">(QS. Ar-Rum: 21)</p>
-            </div>
-        </section>
-
-        <section class="py-20 bg-white">
-            <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16 text-center">
-                <div data-aos="fade-right">
-                    <img src="file8.jpg" class="oval-frame mx-auto mb-6">
-                    <h3 class="text-3xl text-[--gold-primary]">Romeo Montague</h3>
-                    <p class="text-xs mt-3 uppercase tracking-tighter">Putra dari Bapak Lord Montague & Ibu Lady Montague</p>
-                </div>
-                <div data-aos="fade-left">
-                    <img src="file9.jpg" class="oval-frame mx-auto mb-6">
-                    <h3 class="text-3xl text-[--gold-primary]">Juliet Capulet</h3>
-                    <p class="text-xs mt-3 uppercase tracking-tighter">Putri dari Bapak Lord Capulet & Ibu Lady Capulet</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="py-24 px-6 bg-[#F3F0E9]">
-            <div class="max-w-sm mx-auto arch-container p-10 text-center" data-aos="zoom-in">
-                <h2 class="text-3xl mb-8 font-serif">Save The Date</h2>
-                <div class="space-y-8">
-                    <div>
-                        <h4 class="font-bold text-[--gold-primary] text-xs tracking-widest uppercase">Akad Nikah</h4>
-                        <p class="text-sm mt-1 text-gray-600">08.00 - 10.00 WIB</p>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-[--gold-primary] text-xs tracking-widest uppercase">Resepsi</h4>
-                        <p class="text-sm mt-1 text-gray-600">11.00 - Selesai</p>
-                    </div>
-                    <div>
-                        <p class="font-bold">Hotel Grand Luxury</p>
-                        <p class="text-[10px] text-gray-500">Jakarta Pusat</p>
-                    </div>
-                    <button class="gold-btn text-[10px] py-2">Lihat Lokasi</button>
-                </div>
-            </div>
-        </section>
-
-        <section class="py-20 px-4 bg-white">
-            <h2 class="text-3xl text-center mb-10">Our Memories</h2>
-            <div class="grid grid-cols-2 gap-2 max
+</body>
+</html>
