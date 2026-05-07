@@ -3,36 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Undangan Digital - Fix Banget</title>
+    <title>Undangan Digital Eja - Full Motion</title>
     <style>
+        /* Reset & Base */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
-            background: #f4f4f4;
-            font-family: 'Arial', sans-serif;
+            background: #fafafa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
             scroll-behavior: smooth;
         }
 
-        .cover-section {
+        /* Container Section 1 */
+        .section-cover {
             position: relative;
             width: 100%;
             height: 100vh;
-            /* GERBANG DISINI: Sisi kiri dan kanan */
-            background-image: url('1000318798.png'), url('1000318798.png'), url('file1_background.jpg');
-            background-position: left center, right center, center;
-            background-repeat: no-repeat, no-repeat, no-repeat;
-            background-size: contain, contain, cover;
+            background-image: url('file1_background.jpg');
+            background-size: cover;
+            background-position: center;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
         }
 
-        .main-frame {
+        /* Frame Utama (Ukuran 9:16) */
+        .main-wrapper {
             position: relative;
             width: 100%;
             max-width: 500px;
             height: 100%;
+            display: flex;
+            justify-content: center;
         }
 
         .layer {
@@ -41,122 +45,154 @@
             object-fit: contain;
         }
 
-        /* RUMAH ADAT (Posisi bawah biar ketutup bunga) */
-        .rumah {
+        /* --- GERBANG (Kiri & Kanan) --- */
+        .gate-pilar {
+            z-index: 3;
+            height: 100%;
+            width: auto;
+            top: 0;
+        }
+        .gate-left { left: 0; }
+        .gate-right { right: 0; transform: scaleX(-1); }
+
+        /* --- RUMAH ADAT (Tenggelam di bawah) --- */
+        .rumah-adat {
             z-index: 2;
             width: 90%;
-            bottom: 10%;
+            bottom: 12%; /* Dibuat rendah agar tertutup bunga */
             left: 50%;
             transform: translateX(-50%);
         }
 
-        /* BUNGA-BUNGA DENGAN ANIMASI */
-        .bunga { z-index: 10; animation: float 5s infinite ease-in-out; }
-        .bunga-kecil { z-index: 11; animation: sway 6s infinite ease-in-out; }
-
-        .ki-ta { width: 50%; top: -2%; left: -5%; }
-        .ka-ta { width: 50%; top: -2%; right: -5%; transform: scaleX(-1); }
+        /* --- SEMUA BUNGA WAJIB GERAK --- */
         
-        .ki-te { width: 35%; top: 30%; left: 0; }
-        .ka-te { width: 35%; top: 30%; right: 0; transform: scaleX(-1); }
-
-        /* BUNGA BAWAH (Gerak juga bep!) */
-        .bunga-bawah {
-            z-index: 15;
-            width: 60%;
-            bottom: -5%;
-            animation: float 7s infinite ease-in-out;
+        /* Animasi 1: Floating (Naik Turun) */
+        @keyframes flowerFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
         }
-        .ki-ba { left: -5%; }
-        .ka-ba { right: -5%; transform: scaleX(-1); }
+
+        /* Animasi 2: Sway (Goyang Kiri Kanan) */
+        @keyframes flowerSway {
+            0%, 100% { transform: rotate(0deg) translateX(0); }
+            50% { transform: rotate(3deg) translateX(10px); }
+        }
+
+        /* Animasi 3: Pulse (Membesar Mengecil) */
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+
+        /* Implementasi Gerak Bunga */
+        .bunga-move-1 { animation: flowerFloat 6s infinite ease-in-out; }
+        .bunga-move-2 { animation: flowerSway 8s infinite ease-in-out; }
+        .bunga-move-3 { animation: flowerFloat 7s infinite ease-in-out reverse; }
+
+        /* Penempatan Bunga */
+        .ki-ta { z-index: 10; width: 50%; top: -2%; left: -5%; }
+        .ka-ta { z-index: 10; width: 50%; top: -2%; right: -5%; }
+        
+        .ki-te { z-index: 10; width: 35%; top: 30%; left: 0; }
+        .ka-te { z-index: 10; width: 35%; top: 30%; right: 0; }
+
+        /* Bunga Bawah (Rimbun & Menutup Rumah) */
+        .bunga-bawah { z-index: 15; width: 65%; bottom: -5%; }
+        .ki-ba { left: -8%; }
+        .ka-ba { right: -8%; }
         .aksen-ba { z-index: 16; width: 100%; bottom: 0; left: 0; }
 
-        /* LOGO & TOMBOL */
-        .center-content {
+        /* --- AREA TENGAH (LOGO & TOMBOL) --- */
+        .center-area {
             position: absolute;
             z-index: 20;
             top: 40%;
             width: 100%;
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             transform: translateY(-50%);
         }
 
-        .logo {
+        .logo-inisial {
             width: 60%;
-            margin-bottom: 30px;
-            animation: pulse 4s infinite ease-in-out;
+            margin-bottom: 40px;
+            animation: logoPulse 4s infinite ease-in-out;
         }
 
         .btn-buka {
+            padding: 15px 45px;
             background-color: #8D6E63;
             color: white;
             border: none;
-            padding: 14px 40px;
             border-radius: 50px;
+            font-size: 14px;
             font-weight: bold;
             text-transform: uppercase;
+            letter-spacing: 2px;
             cursor: pointer;
             pointer-events: auto;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            transition: 0.3s;
         }
 
-        /* KEYFRAMES */
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-        @keyframes sway {
-            0%, 100% { transform: rotate(0deg); }
-            50% { transform: rotate(3deg); }
-        }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.03); }
-        }
+        .btn-buka:hover { transform: scale(1.1); background-color: #6D4C41; }
 
-        /* SECTION ISI (Biar bisa di-scroll) */
-        .content-section {
-            height: 100vh;
-            background: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        /* Section 2 (Isi Undangan) */
+        .section-content {
+            min-height: 100vh;
+            background: #fff;
+            padding: 50px 20px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
-    <audio id="lagu" src="musik_bg.mp3" loop></audio>
+    <audio id="undanganAudio" src="musik_bg.mp3" loop></audio>
 
-    <div class="cover-section">
-        <div class="main-frame">
-            <img src="file2_rumah_adat.png" class="layer rumah">
+    <section class="section-cover">
+        <div class="main-wrapper">
+            
+            <img src="file2_rumah_adat.png" class="layer rumah-adat">
 
-            <img src="file4_bunga_kiri_atas.png" class="layer bunga ki-ta">
-            <img src="file5_bunga_kanan_atas.png" class="layer bunga ka-ta">
-            <img src="file6_bunga_kiri_tengah.png" class="layer bunga-kecil ki-te">
-            <img src="file7_bunga_kanan_tengah.png" class="layer bunga-kecil ka-te">
+            <img src="1000318798.png" class="layer gate-pilar gate-left">
+            <img src="1000318798.png" class="layer gate-pilar gate-right">
 
-            <div class="center-content">
-                <img src="file12_logo_inisial.png" class="logo">
-                <br>
-                <button class="btn-buka" onclick="buka()">Buka Undangan</button>
+            <img src="file4_bunga_kiri_atas.png" class="layer bunga-move-1 ki-ta">
+            <img src="file5_bunga_kanan_atas.png" class="layer bunga-move-3 ka-ta">
+            <img src="file6_bunga_kiri_tengah.png" class="layer bunga-move-2 ki-te">
+            <img src="file7_bunga_kanan_tengah.png" class="layer bunga-move-2 ka-te">
+
+            <div class="center-area">
+                <img src="file12_logo_inisial.png" class="logo-inisial">
+                <button class="btn-buka" onclick="bukaUndangan()">Buka Undangan</button>
             </div>
 
-            <img src="file8_bunga_kiri_bawah.png" class="layer bunga-bawah ki-ba">
-            <img src="file9_bunga_kanan_bawah.png" class="layer bunga-bawah ka-ba">
-            <img src="file13_aksen_bawah.png" class="layer aksen-ba">
-        </div>
-    </div>
+            <img src="file8_bunga_kiri_bawah.png" class="layer bunga-move-1 bunga-bawah ki-ba">
+            <img src="file9_bunga_kanan_bawah.png" class="layer bunga-move-1 bunga-bawah ka-ba">
+            <img src="file13_aksen_bawah.png" class="layer bunga-move-3 aksen-ba">
 
-    <div id="targetScroll" class="content-section">
-        <h2>Konten Undangan Kamu Di Sini</h2>
-    </div>
+        </div>
+    </section>
+
+    <section id="konten" class="section-content">
+        <h2>Selamat Datang di Undangan Kami</h2>
+        <p>Isi konten selanjutnya di sini ya bep...</p>
+    </section>
 
     <script>
-        function buka() {
-            document.getElementById('lagu').play();
-            document.getElementById('targetScroll').scrollIntoView();
+        function bukaUndangan() {
+            // Putar Musik
+            var audio = document.getElementById("undanganAudio");
+            audio.play().catch(function(error) {
+                console.log("Autoplay dicegah browser, musik jalan setelah interaksi.");
+            });
+
+            // Scroll ke Konten
+            document.getElementById('konten').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
         }
     </script>
 </body>
