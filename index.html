@@ -3,94 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Undangan Digital Premium</title>
+    <title>Undangan Digital - Section 1 Fixed</title>
     <style>
+        /* Reset & Base */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
+        
         body, html { 
             height: 100%; 
-            font-family: sans-serif; 
-            overflow-x: hidden;
-            background: #f0f0f0;
+            overflow-x: hidden; 
+            background: #e5e5e5;
+            font-family: 'Arial', sans-serif;
         }
 
         /* Container Section 1 */
         .section-cover {
             position: relative;
             width: 100%;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            height: 100vh; /* Full layar HP */
             background-image: url('file1_background.jpg');
             background-size: cover;
             background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
         }
 
-        /* FRAME UTAMA (Kunci Proporsi 9:16 seperti layar HP) */
-        .main-frame {
+        /* WRAPPER UTAMA (Kotak Imajiner agar layout tidak lari) */
+        .content-frame {
             position: relative;
             width: 100%;
-            max-width: 500px; /* Lebar maksimal layar HP */
+            max-width: 450px; /* Lebar maksimal layar HP umum */
             height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* CSS Layering Universal */
+        /* General Layering */
         .layer {
             position: absolute;
-            object-fit: contain;
             pointer-events: none;
+            object-fit: contain;
         }
 
-        /* 3. BINGKAI UTAMA (Patokan Elemen Lain) */
-        .file3 {
-            z-index: 3;
-            width: 90%;
-            height: 90%;
-            top: 5%;
-        }
-
-        /* 2. RUMAH ADAT (Di dalam bingkai, bawahnya agak naik sedikit) */
-        .file2 {
+        /* --- LAYER 1: RUMAH ADAT (Paling Belakang di dalam bingkai) --- */
+        .file2_rumah {
             z-index: 2;
             width: 85%;
-            bottom: 15%; /* Biar bawahnya nanti ketutup bunga */
+            bottom: 22%; /* Posisi kaki rumah diatur agar tertutup bunga bawah */
         }
 
-        /* 12. LOGO (Tepat di tengah bingkai) */
-        .file12 {
-            z-index: 10;
-            width: 50%;
-            top: 35%;
-            animation: pulse 4s infinite ease-in-out;
+        /* --- LAYER 2: BINGKAI UTAMA (Membungkus Rumah) --- */
+        .file3_bingkai {
+            z-index: 3;
+            width: 95%;
+            height: 90%;
+            top: 50%;
+            transform: translateY(-50%);
         }
 
-        /* BUNGA-BUNGA SUDUT (Dibuat nempel ke bingkai, bukan ke layar) */
-        .file4 { z-index: 5; width: 45%; top: 0; left: 0; } /* Kiri Atas */
-        .file5 { z-index: 5; width: 45%; top: 0; right: 0; } /* Kanan Atas */
-        
-        /* BUNGA TENGAH (Bunga Hijau yang ngegantung tadi) */
-        .file6 { z-index: 5; width: 35%; top: 25%; left: 0; } /* Kiri Tengah nempel tepi */
-        .file7 { z-index: 5; width: 35%; top: 25%; right: 0; } /* Kanan Tengah nempel tepi */
+        /* --- LAYER 3: BUNGA SUDUT ATAS --- */
+        .file4_bunga_ki_ta { z-index: 5; width: 45%; top: 0; left: 0; }
+        .file5_bunga_ka_ta { z-index: 5; width: 45%; top: 0; right: 0; }
 
-        /* BUNGA BAWAH (Menutupi bawah rumah adat agar rapi) */
-        .file8 { z-index: 12; width: 100%; bottom: 0; left: 0; } /* Kiri Bawah */
-        .file9 { z-index: 12; width: 100%; bottom: 0; right: 0; } /* Kanan Bawah */
-        
-        /* 13. AKSEN BAWAH (Detail tambahan di dasar) */
-        .file13 { z-index: 13; width: 100%; bottom: -5%; }
+        /* --- LAYER 4: BUNGA TENGAH (Nempel Tepi Bingkai) --- */
+        .file6_bunga_ki_te { z-index: 5; width: 30%; top: 25%; left: 0; }
+        .file7_bunga_ka_te { z-index: 5; width: 30%; top: 25%; right: 0; }
 
-        /* DAUN SELIPAN */
-        .file10 { z-index: 4; width: 20%; top: 20%; left: 10%; }
-        .file11 { z-index: 4; width: 20%; bottom: 30%; right: 10%; }
+        /* --- LAYER 5: BUNGA BAWAH (MENUTUPI KAKI RUMAH) --- */
+        /* Kita pakai width 100% agar menutup rata dari kiri ke kanan */
+        .file8_bunga_ki_ba { z-index: 10; width: 60%; bottom: 0; left: 0; }
+        .file9_bunga_ka_ba { z-index: 10; width: 60%; bottom: 0; right: 0; }
+        .file13_aksen_ba { z-index: 11; width: 100%; bottom: 0; }
 
-        /* TOMBOL BUKA (Tetap di area bawah bingkai) */
+        /* --- LAYER 6: DAUN SELIPAN --- */
+        .file10_daun1 { z-index: 4; width: 25%; top: 15%; left: 10%; opacity: 0.8; }
+        .file11_daun2 { z-index: 4; width: 25%; bottom: 35%; right: 10%; opacity: 0.8; }
+
+        /* --- LAYER 7: LOGO (CENTER) --- */
+        .file12_logo {
+            z-index: 15;
+            width: 55%;
+            top: 40%;
+            animation: softPulse 4s infinite ease-in-out;
+        }
+
+        /* Tombol Buka Undangan */
         .btn-container {
             position: absolute;
-            bottom: 12%;
+            bottom: 8%; /* Posisi di atas tumpukan bunga paling bawah sedikit */
             z-index: 20;
             width: 100%;
             display: flex;
@@ -101,63 +103,74 @@
             background-color: #8D6E63;
             color: white;
             border: none;
-            padding: 12px 40px;
+            padding: 14px 45px;
             border-radius: 50px;
             font-size: 14px;
             font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
             pointer-events: auto;
+            transition: 0.3s;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.9; }
-            50% { transform: scale(1.05); opacity: 1; }
+        .btn-buka:hover { transform: scale(1.05); background-color: #6d4c41; }
+
+        /* Animasi */
+        @keyframes softPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
-        /* Section 2 (Isi) */
-        .section-dua { height: 100vh; background: white; display: flex; align-items: center; justify-content: center; }
+        /* Section 2 */
+        .section-2 {
+            height: 100vh;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
 
-    <audio id="musik" src="musik_bg.mp3" loop></audio>
+    <audio id="bgm" src="musik_bg.mp3" loop></audio>
 
-    <section class="section-cover">
-        <div class="main-frame">
-            <img src="file2_rumah_adat.png" class="layer file2">
-            <img src="file3_bingkai_utama.png" class="layer file3">
+    <div class="section-cover">
+        <div class="content-frame">
+            <img src="file2_rumah_adat.png" class="layer file2_rumah">
             
-            <img src="file10_daun_selipan_1.png" class="layer file10">
-            <img src="file11_daun_selipan_2.png" class="layer file11">
+            <img src="file3_bingkai_utama.png" class="layer file3_bingkai">
 
-            <img src="file4_bunga_kiri_atas.png" class="layer file4">
-            <img src="file5_bunga_kanan_atas.png" class="layer file5">
-            <img src="file6_bunga_kiri_tengah.png" class="layer file6">
-            <img src="file7_bunga_kanan_tengah.png" class="layer file7">
-            
-            <img src="file8_bunga_kiri_bawah.png" class="layer file8">
-            <img src="file9_bunga_kanan_bawah.png" class="layer file9">
-            <img src="file13_aksen_bawah.png" class="layer file13">
+            <img src="file10_daun_selipan_1.png" class="layer file10_daun1">
+            <img src="file11_daun_selipan_2.png" class="layer file11_daun2">
 
-            <img src="file12_logo_inisial.png" class="layer file12">
+            <img src="file4_bunga_kiri_atas.png" class="layer file4_bunga_ki_ta">
+            <img src="file5_bunga_kanan_atas.png" class="layer file5_bunga_ka_ta">
+            <img src="file6_bunga_kiri_tengah.png" class="layer file6_bunga_ki_te">
+            <img src="file7_bunga_kanan_tengah.png" class="layer file7_bunga_ka_te">
+
+            <img src="file12_logo_inisial.png" class="layer file12_logo">
+
+            <img src="file8_bunga_kiri_bawah.png" class="layer file8_bunga_ki_ba">
+            <img src="file9_bunga_kanan_bawah.png" class="layer file9_bunga_ka_ba">
+            <img src="file13_aksen_bawah.png" class="layer file13_aksen_ba">
 
             <div class="btn-container">
-                <button class="btn-buka" onclick="buka()">Buka Undangan</button>
+                <button class="btn-buka" onclick="bukaUndangan()">Buka Undangan</button>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section id="isi" class="section-dua">
-        <h2>Konten Undangan Disini</h2>
+    <section id="section2" class="section-2">
+        <h2>Konten Undangan Selanjutnya</h2>
     </section>
 
     <script>
-        function buka() {
-            document.getElementById('musik').play();
-            document.getElementById('isi').scrollIntoView({ behavior: 'smooth' });
+        function bukaUndangan() {
+            document.getElementById('bgm').play();
+            document.getElementById('section2').scrollIntoView({ behavior: 'smooth' });
         }
     </script>
 </body>
