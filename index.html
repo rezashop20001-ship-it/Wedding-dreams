@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Undangan Digital - Pilar Style</title>
+    <title>Undangan Digital - Perfect Layout</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body, html { 
             height: 100%; 
-            overflow-x: hidden; 
+            overflow: hidden; 
             background: #d1d1d1;
+            font-family: 'Arial', sans-serif;
         }
 
-        .cover-container {
+        .section-cover {
             position: relative;
             width: 100%;
             height: 100vh;
@@ -22,88 +23,69 @@
             background-position: center;
             display: flex;
             justify-content: center;
-            overflow: hidden;
+            align-items: center;
         }
 
-        /* --- SISTEM PILAR (Kiri & Kanan) --- */
-        .side-decor {
-            position: absolute;
-            top: 0;
+        /* FRAME UTAMA (Patokan semua elemen) */
+        .main-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
             height: 100%;
-            width: 50%; /* Bagi dua layar */
             display: flex;
-            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
-        .left-side { left: 0; align-items: flex-start; }
-        .right-side { right: 0; align-items: flex-end; }
+        .layer {
+            position: absolute;
+            pointer-events: none;
+            object-fit: contain;
+        }
 
-        .layer { position: absolute; pointer-events: none; object-fit: contain; }
-
-        /* Bingkai Pilar (file3) - Dibuat nempel ke tepi */
-        .bingkai-pilar {
+        /* 1. GERBANG/BINGKAI (Muncul lagi & nempel tepi) */
+        .gerbang {
+            z-index: 3;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .pilar {
             height: 100%;
             width: auto;
-            z-index: 3;
-            top: 0;
         }
-        .left-side .bingkai-pilar { left: 0; }
-        .right-side .bingkai-pilar { right: 0; transform: scaleX(-1); } /* Balik bingkai untuk sisi kanan */
+        .pilar-kanan { transform: scaleX(-1); }
 
-        /* Bunga-Bunga Menyatu dengan Pilar */
-        .bunga-pilar { z-index: 5; width: 80%; }
-        
-        /* Posisi Spesifik Bunga */
-        .ki-ta { top: 0; left: 0; }
-        .ka-ta { top: 0; right: 0; }
-        .ki-te { top: 30%; left: -10%; width: 70%; }
-        .ka-te { top: 30%; right: -10%; width: 70%; }
-        .ki-ba { bottom: 0; left: 0; width: 100%; z-index: 10; }
-        .ka-ba { bottom: 0; right: 0; width: 100%; z-index: 10; }
-
-        /* --- AREA TENGAH --- */
-        .center-content {
-            position: relative;
+        /* 2. RUMAH ADAT (Dibawahin lagi biar ketutup bunga) */
+        .rumah-adat {
             z-index: 2;
+            width: 90%;
+            bottom: 12%; /* Diturunkan supaya tertutup bunga bawah */
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* 3. LOGO & TOMBOL */
+        .center-wrap {
+            position: absolute;
+            z-index: 15;
             width: 100%;
-            max-width: 500px;
-            height: 100%;
+            top: 38%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
         }
 
-        .rumah-adat {
-            width: 90%;
-            bottom: 15%;
-            z-index: 2;
-        }
-
-        .logo-center {
-            width: 60%;
-            z-index: 15;
-            margin-bottom: 50px;
+        .logo {
+            width: 55%;
+            margin-bottom: 40px;
             animation: pulse 4s infinite ease-in-out;
         }
 
-        /* Tombol & Aksen Bawah */
-        .bottom-wrap {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            z-index: 12;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .aksen-bawah { width: 100%; position: relative; margin-bottom: -20px; }
-
         .btn-buka {
-            position: relative;
-            z-index: 20;
-            margin-bottom: 12vh;
             padding: 12px 40px;
             background-color: #8D6E63;
             color: white;
@@ -113,6 +95,33 @@
             text-transform: uppercase;
             box-shadow: 0 5px 15px rgba(0,0,0,0.4);
             cursor: pointer;
+            pointer-events: auto;
+        }
+
+        /* 4. BUNGA-BUNGA (Balik gerak lagi!) */
+        .bunga { z-index: 10; width: 45%; }
+        
+        .ki-ta { top: -10px; left: -10px; animation: float 6s infinite ease-in-out; }
+        .ka-ta { top: -10px; right: -10px; animation: float 7s infinite ease-in-out reverse; }
+        
+        .ki-te { top: 30%; left: -5%; width: 35%; animation: sway 8s infinite ease-in-out; }
+        .ka-te { top: 30%; right: -5%; width: 35%; animation: sway 8s infinite ease-in-out reverse; }
+
+        /* Tumpukan Bawah (Menutup kaki rumah) */
+        .bunga-bawah { z-index: 12; width: 65%; bottom: -10px; }
+        .ki-ba { left: -5%; }
+        .ka-ba { right: -5%; }
+        .aksen { z-index: 13; width: 100%; bottom: -5px; left: 0; }
+
+        /* ANIMASI */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }
+
+        @keyframes sway {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            50% { transform: translateX(10px) rotate(-2deg); }
         }
 
         @keyframes pulse {
@@ -120,44 +129,47 @@
             50% { transform: scale(1.05); }
         }
 
-        .section-2 { height: 100vh; background: white; }
+        /* Section 2 */
+        .section-2 { height: 100vh; background: white; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
 
     <audio id="musik" src="musik_bg.mp3" loop></audio>
 
-    <div class="cover-container">
-        
-        <div class="side-decor left-side">
-            <img src="1000318798.png" class="layer bingkai-pilar"> <img src="file4_bunga_kiri_atas.png" class="layer bunga-pilar ki-ta">
-            <img src="file6_bunga_kiri_tengah.png" class="layer bunga-pilar ki-te">
-            <img src="file8_bunga_kiri_bawah.png" class="layer bunga-pilar ki-ba">
-        </div>
-
-        <div class="center-content">
-            <img src="file2_rumah_adat.png" class="layer rumah-adat">
-            <img src="file12_logo_inisial.png" class="layer logo-center">
+    <div class="section-cover">
+        <div class="main-container">
             
-            <div class="bottom-wrap">
-                <button class="btn-buka" onclick="start()">Buka Undangan</button>
-                <img src="file13_aksen_bawah.png" class="aksen-bawah">
+            <img src="file2_rumah_adat.png" class="layer rumah-adat">
+
+            <div class="layer gerbang">
+                <img src="1000318798.png" class="pilar pilar-kiri">
+                <img src="1000318798.png" class="pilar pilar-kanan">
             </div>
-        </div>
 
-        <div class="side-decor right-side">
-            <img src="1000318798.png" class="layer bingkai-pilar">
-            <img src="file5_bunga_kanan_atas.png" class="layer bunga-pilar ka-ta">
-            <img src="file7_bunga_kanan_tengah.png" class="layer bunga-pilar ka-te">
-            <img src="file9_bunga_kanan_bawah.png" class="layer bunga-pilar ka-ba">
-        </div>
+            <img src="file4_bunga_kiri_atas.png" class="layer bunga ki-ta">
+            <img src="file5_bunga_kanan_atas.png" class="layer bunga ka-ta">
+            <img src="file6_bunga_kiri_tengah.png" class="layer bunga ki-te">
+            <img src="file7_bunga_kanan_tengah.png" class="layer bunga ka-te">
 
+            <div class="center-wrap">
+                <img src="file12_logo_inisial.png" class="logo">
+                <button class="btn-buka" onclick="buka()">Buka Undangan</button>
+            </div>
+
+            <img src="file8_bunga_kiri_bawah.png" class="layer bunga-bawah ki-ba">
+            <img src="file9_bunga_kanan_bawah.png" class="layer bunga-bawah ka-ba">
+            <img src="file13_aksen_bawah.png" class="layer aksen">
+
+        </div>
     </div>
 
-    <section id="isi" class="section-2"></section>
+    <section id="isi" class="section-2">
+        <h2>Konten Undangan Selesai!</h2>
+    </section>
 
     <script>
-        function start() {
+        function buka() {
             document.getElementById('musik').play();
             document.getElementById('isi').scrollIntoView({ behavior: 'smooth' });
         }
