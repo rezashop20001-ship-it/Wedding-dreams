@@ -3,178 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Undangan Digital - Section Cover</title>
+    <title>Undangan Digital - Fix Banget</title>
     <style>
-        /* Reset & Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            background: #f4f4f4;
+            font-family: 'Arial', sans-serif;
+            scroll-behavior: smooth;
         }
 
-        body, html {
-            height: 100%;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow-x: hidden;
-            background-color: #f4f4f4;
-        }
-
-        /* Container Utama */
-        .invitation-container {
-            position: relative;
-            width: 100%;
-            max-width: 500px; /* Standar Mobile View */
-            margin: 0 auto;
-            min-height: 100vh;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* Section 1: Cover */
-        #section-cover {
+        .cover-section {
             position: relative;
             width: 100%;
             height: 100vh;
+            /* GERBANG DISINI: Sisi kiri dan kanan */
+            background-image: url('1000318798.png'), url('1000318798.png'), url('file1_background.jpg');
+            background-position: left center, right center, center;
+            background-repeat: no-repeat, no-repeat, no-repeat;
+            background-size: contain, contain, cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             overflow: hidden;
         }
 
-        /* Sistem Layering Gambar */
-        .layer {
-            position: absolute;
+        .main-frame {
+            position: relative;
             width: 100%;
+            max-width: 500px;
             height: 100%;
-            object-fit: contain; /* Menjaga proporsi gambar */
-            pointer-events: none; /* Supaya tidak mengganggu klik tombol */
-            top: 0;
-            left: 0;
         }
 
-        /* Urutan Z-Index (13 Elemen) */
-        
-        /* 1. Background Paling Belakang */
-        .file1 { z-index: 1; object-fit: cover; } 
-
-        /* 2. Rumah Adat */
-        .file2 { z-index: 2; transform: scale(0.9); top: 5%; }
-
-        /* 3. Bingkai Utama (Menutup Rumah Adat) */
-        .file3 { z-index: 3; }
-
-        /* 4-11. Dekorasi Bunga & Daun */
-        .file4 { z-index: 5; } /* Kiri Atas */
-        .file5 { z-index: 5; } /* Kanan Atas */
-        .file6 { z-index: 5; } /* Kiri Tengah */
-        .file7 { z-index: 5; } /* Kanan Tengah */
-        .file8 { z-index: 5; } /* Kiri Bawah */
-        .file9 { z-index: 5; } /* Kanan Bawah */
-        .file10 { z-index: 4; } /* Daun Selipan 1 */
-        .file11 { z-index: 4; } /* Daun Selipan 2 */
-
-        /* 12. Logo Inisial (Paling Depan) */
-        .file12 { 
-            z-index: 10; 
-            width: 50%; 
-            height: auto; 
-            top: 30%; 
-            left: 25%; 
+        .layer {
+            position: absolute;
+            pointer-events: none;
             object-fit: contain;
         }
 
-        /* 13. Aksen Bawah */
-        .file13 { z-index: 6; }
+        /* RUMAH ADAT (Posisi bawah biar ketutup bunga) */
+        .rumah {
+            z-index: 2;
+            width: 90%;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
 
-        /* Area Tombol Buka Undangan */
-        .button-wrapper {
-            position: absolute;
-            bottom: 15%;
+        /* BUNGA-BUNGA DENGAN ANIMASI */
+        .bunga { z-index: 10; animation: float 5s infinite ease-in-out; }
+        .bunga-kecil { z-index: 11; animation: sway 6s infinite ease-in-out; }
+
+        .ki-ta { width: 50%; top: -2%; left: -5%; }
+        .ka-ta { width: 50%; top: -2%; right: -5%; transform: scaleX(-1); }
+        
+        .ki-te { width: 35%; top: 30%; left: 0; }
+        .ka-te { width: 35%; top: 30%; right: 0; transform: scaleX(-1); }
+
+        /* BUNGA BAWAH (Gerak juga bep!) */
+        .bunga-bawah {
             z-index: 15;
+            width: 60%;
+            bottom: -5%;
+            animation: float 7s infinite ease-in-out;
+        }
+        .ki-ba { left: -5%; }
+        .ka-ba { right: -5%; transform: scaleX(-1); }
+        .aksen-ba { z-index: 16; width: 100%; bottom: 0; left: 0; }
+
+        /* LOGO & TOMBOL */
+        .center-content {
+            position: absolute;
+            z-index: 20;
+            top: 40%;
             width: 100%;
-            display: flex;
-            justify-content: center;
-            pointer-events: auto; /* Aktifkan klik kembali */
+            text-align: center;
+            transform: translateY(-50%);
         }
 
-        .btn-open {
-            background-color: #8B5E3C; /* Warna cokelat sesuai video */
+        .logo {
+            width: 60%;
+            margin-bottom: 30px;
+            animation: pulse 4s infinite ease-in-out;
+        }
+
+        .btn-buka {
+            background-color: #8D6E63;
             color: white;
-            padding: 12px 35px;
             border: none;
-            border-radius: 25px;
-            font-size: 14px;
+            padding: 14px 40px;
+            border-radius: 50px;
+            font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 2px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease;
+            pointer-events: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
-        .btn-open:hover {
-            transform: scale(1.05);
+        /* KEYFRAMES */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        @keyframes sway {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(3deg); }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
         }
 
-        /* Section Selanjutnya (Untuk simulasi scroll) */
-        #section-content {
+        /* SECTION ISI (Biar bisa di-scroll) */
+        .content-section {
             height: 100vh;
-            background: #fff;
+            background: white;
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 20;
         }
     </style>
 </head>
 <body>
 
-    <audio id="weddingMusic" loop>
-        <source src="musik_undangan.mp3" type="audio/mpeg">
-    </audio>
+    <audio id="lagu" src="musik_bg.mp3" loop></audio>
 
-    <div class="invitation-container">
-        
-        <section id="section-cover">
-            <img src="file1_background.jpg" class="layer file1" alt="Background">
-            <img src="file2_rumah_adat.png" class="layer file2" alt="Rumah Adat">
-            <img src="file3_bingkai_utama.png" class="layer file3" alt="Bingkai">
-            
-            <img src="file4_bunga_kiri_atas.png" class="layer file4">
-            <img src="file5_bunga_kanan_atas.png" class="layer file5">
-            <img src="file6_bunga_kiri_tengah.png" class="layer file6">
-            <img src="file7_bunga_kanan_tengah.png" class="layer file7">
-            <img src="file8_bunga_kiri_bawah.png" class="layer file8">
-            <img src="file9_bunga_kanan_bawah.png" class="layer file9">
-            
-            <img src="file10_daun_selipan_1.png" class="layer file10">
-            <img src="file11_daun_selipan_2.png" class="layer file11">
-            <img src="file13_aksen_bawah.png" class="layer file13">
-            
-            <img src="file12_logo_inisial.png" class="layer file12" alt="Logo Pengantin">
+    <div class="cover-section">
+        <div class="main-frame">
+            <img src="file2_rumah_adat.png" class="layer rumah">
 
-            <div class="button-wrapper">
-                <button class="btn-open" onclick="openInvitation()">Buka Undangan</button>
+            <img src="file4_bunga_kiri_atas.png" class="layer bunga ki-ta">
+            <img src="file5_bunga_kanan_atas.png" class="layer bunga ka-ta">
+            <img src="file6_bunga_kiri_tengah.png" class="layer bunga-kecil ki-te">
+            <img src="file7_bunga_kanan_tengah.png" class="layer bunga-kecil ka-te">
+
+            <div class="center-content">
+                <img src="file12_logo_inisial.png" class="logo">
+                <br>
+                <button class="btn-buka" onclick="buka()">Buka Undangan</button>
             </div>
-        </section>
 
-        <section id="section-content">
-            <h2>Halaman Isi Undangan</h2>
-        </section>
+            <img src="file8_bunga_kiri_bawah.png" class="layer bunga-bawah ki-ba">
+            <img src="file9_bunga_kanan_bawah.png" class="layer bunga-bawah ka-ba">
+            <img src="file13_aksen_bawah.png" class="layer aksen-ba">
+        </div>
+    </div>
 
+    <div id="targetScroll" class="content-section">
+        <h2>Konten Undangan Kamu Di Sini</h2>
     </div>
 
     <script>
-        function openInvitation() {
-            // 1. Play Musik
-            const audio = document.getElementById('weddingMusic');
-            audio.play().catch(error => {
-                console.log("Autoplay dicegah browser, musik akan aktif setelah interaksi.");
-            });
-
-            // 2. Scroll ke Section Selanjutnya
-            const contentSection = document.getElementById('section-content');
-            contentSection.scrollIntoView({ behavior: 'smooth' });
+        function buka() {
+            document.getElementById('lagu').play();
+            document.getElementById('targetScroll').scrollIntoView();
         }
     </script>
-
 </body>
 </html>
